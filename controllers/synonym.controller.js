@@ -41,10 +41,38 @@ const addSynonym = async (req, res) => {
     });
 
     await newSynonym.save();
-    sender(201, "Synonym successfully created");
+    sender(201, "Synonym successfully created", res);
+}
+
+const updateSynonym = async (req, res) => {
+    const id = req.params.id;
+
+    if (!isValidObjectId(id)) {
+        return sender(404, "Invalid Id", res);
+    }
+
+    const {descriptionId, dictionaryId } = req.body;
+
+    const updatedSynonym = await Synonym.findOneAndUpdate({_id: id}, {descriptionId, dictionaryId}, {returnOriginal: true});
+    
+    sender(200, "Successfully updated", res);
+}
+
+const removeSynonym = async (req, res) => {
+    const id = req.params.id;
+
+    if (!isValidObjectId(id)) {
+        return sender(404, "Invalid Id", res);
+    }
+
+    await Synonym.findOneAndDelete({_id: id});
+    sender(200, "Successfully deleted", res);
 }
 
 module.exports = {
     getAllSynonyms,
     getSynonymById,
+    addSynonym,
+    updateSynonym,
+    removeSynonym
 }
