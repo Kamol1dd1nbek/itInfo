@@ -11,6 +11,7 @@ const categorySchema = new Schema(
         parentCategoryId: {
             type: Schema.Types.ObjectId,
             ref: "Category",
+            default: "648e50a44fa220fe82fec49a"
         }
     },
     {

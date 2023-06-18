@@ -5,7 +5,14 @@ const chalk = require("chalk");
 const log = console.log;
 const app = express();
 
+const mainRoute = require("./routes");
+
+
 app.use(express.json());
+
+app.use(mainRoute);
+
+
 async function start() {
     try {
         await mongoose.connect(config.get("dbUri"));
