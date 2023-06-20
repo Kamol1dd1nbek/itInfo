@@ -19,7 +19,7 @@ async function start() {
         await mongoose.connect(config.get("dbUri"));
         const PORT = config.get("port") || 3030;
         app.listen(PORT, () => {
-            log(chalk.bgGreen(chalk.black(` Server is running on port: ${PORT} `)));
+            console.log(chalk.bgGreen(chalk.black(` Server is running on port: ${PORT} `)));
 
         })
     } catch (error) {
