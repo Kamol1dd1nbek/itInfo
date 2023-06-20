@@ -113,7 +113,7 @@ const updateAuthor = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const updatedAuthor = await Author.findOneAndUpdate({_id : id},{
+    const updateвAuthor = await Author.findOneAndUpdate({_id : id},{
             firstName,
             lastName,
             nickName,
@@ -126,7 +126,7 @@ const updateAuthor = async (req, res) => {
             isExpert,
             isActive
     }, {returnOriginal: true});
-    console.log(updateAuthor)
+    
     res.status(200).send({message: "Author successfully updated"});
 
     } catch (error) {
@@ -134,6 +134,16 @@ const updateAuthor = async (req, res) => {
     }
 }
 
+const removeAuthor = async (req, res) => {
+    const id = req.params.id;
+
+    if (!isValidObjectId(id)) return res.status(400).send({message: "Invalid Id"});
+
+    const removedAuthor = await Author.findOneAndDelete({_id: id}, {returnOriginal: true});
+
+    if (!removedAuthor) return res.status(404).send({message: "Author not found"});
+    res.status(200).send({message: "Successfully deleted"});
+}
 
 
 module.exports = {
@@ -141,4 +151,5 @@ module.exports = {
     getAuthorById,
     addAuthor,
     updateAuthor,
+    removeAuthor
 }
